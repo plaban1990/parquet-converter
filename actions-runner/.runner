@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 2,
+  "agentName": "IN2-1033509LTT",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus6.actions.githubusercontent.com/X5XTlu9XgqtC3fHMnS4JVoB8GrJzdEthU48HSwhEo0HNeqTWr3/",
+  "gitHubUrl": "https://github.com/Plaban-Dwivedy_ghub/plat-bulk-parquet-converter",
+  "workFolder": "_work"
+}

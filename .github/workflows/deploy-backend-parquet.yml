@@ -1,0 +1,23 @@
+name: Deploy Flask Backend
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install flask pandas pyarrow waitress
+
+      - name: Start Flask Server
+        run: python -m waitress --listen=0.0.0.0:5000 app:app

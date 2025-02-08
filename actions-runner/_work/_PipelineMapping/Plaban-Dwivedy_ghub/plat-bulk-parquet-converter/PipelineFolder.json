@@ -1,0 +1,12 @@
+﻿{
+  "repositoryName": "Plaban-Dwivedy_ghub/plat-bulk-parquet-converter",
+  "pipelineDirectory": "plat-bulk-parquet-converter",
+  "workspaceDirectory": "plat-bulk-parquet-converter\\plat-bulk-parquet-converter",
+  "repositories": {
+    "Plaban-Dwivedy_ghub/plat-bulk-parquet-converter": {
+      "repositoryPath": "plat-bulk-parquet-converter\\plat-bulk-parquet-converter",
+      "lastRunOn": "02/06/2025 20:49:03 +05:30"
+    }
+  },
+  "lastRunOn": "02/06/2025 22:30:12 +05:30"
+}
