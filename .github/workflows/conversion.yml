@@ -1,0 +1,40 @@
+name: CSV ↔ Parquet Conversion
+
+on:
+  workflow_dispatch:  # Manual trigger for now
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: pip install pandas pyarrow fastparquet
+
+      - name: Upload Sample Input File
+        uses: actions/upload-artifact@v3
+        with:
+          name: input-files
+          path: input.csv  # Make sure this file exists in your repo
+
+      - name: Run Conversion (CSV to Parquet)
+        run: python convert.py csv input.csv output.parquet
+
+      - name: Run Conversion (Parquet to CSV)
+        run: python convert.py parquet output.parquet output.csv
+
+      - name: Upload Converted Files
+        uses: actions/upload-artifact@v3
+        with:
+          name: converted-files
+          path: |
+            output.parquet
+            output.csv
