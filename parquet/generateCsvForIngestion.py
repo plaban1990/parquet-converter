@@ -25,8 +25,8 @@ def generate_value(data_type, input_element_name):
         return "N/A"  # In case of unknown type
 
 # Define the input and output directories
-input_directory = '../entityFiles/'
-output_directory = '../target/'
+input_directory = './entityFiles/'
+output_directory = './target/'
 
 # Function to read the input element and type from the CSV file
 def read_input_elements_from_csv(csv_filename):
