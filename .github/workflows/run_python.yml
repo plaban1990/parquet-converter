@@ -1,0 +1,40 @@
+name: Run Python Script & Generate Files
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allows manual execution
+
+jobs:
+  generate-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: pip install pandas pyarrow fastparquet
+
+      - name: Run Python Script
+        run: python generate_files.py
+
+      - name: Upload Generated Files as Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated-files
+          path: output/
+
+      - name: Commit & Push Files to Repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/data.csv output/data.parquet
+          git commit -m "Added generated CSV and Parquet files"
+          git push origin main
