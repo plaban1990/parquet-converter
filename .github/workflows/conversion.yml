@@ -13,11 +13,11 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # Step 2: Set up Python environment
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'  # You can use any version that works for your script
 
@@ -39,7 +39,7 @@ jobs:
 
       # Step 6: Upload generated files (optional - if you want to store the generated files as artifacts)
       - name: Upload CSV and Parquet files as artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: generated-files
           path: |
