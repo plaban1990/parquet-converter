@@ -1,0 +1,5 @@
+input_element_name,type
+locationId,String
+itemId,String
+MAXSHELFLIFEDUR_OLD,Double
+DOCUMENTACTIONCODE,String

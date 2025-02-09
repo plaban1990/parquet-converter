@@ -1,0 +1,10 @@
+input_element_name,type
+quantityUom,String
+event,String
+demandChannel,String
+startDate,Date
+transactionCode,String
+locationId,String
+itemId,String
+duration,integer
+DOCUMENTACTIONCODE,String

@@ -1,0 +1,9 @@
+input_element_name,type
+customerOrderId,String
+itemId,String
+shipToId,String
+shipFromId,String
+lineItemNumber,String
+schedShipDateTime,Timestamp
+ISCASESPLITTINGALLOWED,Boolean
+DOCUMENTACTIONCODE,String

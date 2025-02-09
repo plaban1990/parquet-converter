@@ -1,0 +1,11 @@
+input_element_name,type
+itemId,String
+substituteItemEffFromDate,Date
+substituteItemId,String
+offset,Double
+locationId,String
+effFromDate,Date
+componentItemId,String
+bomNumber,integer
+SUBORDDRAWQTY,Double
+DOCUMENTACTIONCODE,String

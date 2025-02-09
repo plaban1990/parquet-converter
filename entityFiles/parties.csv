@@ -1,0 +1,5 @@
+input_element_name,type
+ownerOfParty,String
+partyId,String
+SALESORGANIZATION,String
+DOCUMENTACTIONCODE,String
