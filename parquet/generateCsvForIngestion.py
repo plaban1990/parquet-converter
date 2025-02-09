@@ -3,6 +3,7 @@ import random
 import string
 from datetime import datetime
 import os
+import pandas as pd
 
 # Function to generate random values based on the type
 def generate_value(data_type, input_element_name):
@@ -66,15 +67,22 @@ for filename in os.listdir(input_directory):
         unique_number = random.randint(1000, 9999)
 
         # Create the CSV filename in the format 'inventoryTransactions_timestamp_number.csv'
-        output_filename = f"{base_filename}_{timestamp}_{unique_number}.csv"
+        output_filename_csv = f"{base_filename}_{timestamp}_{unique_number}.csv"
+        output_filename_parquet = f"{base_filename}_{timestamp}_{unique_number}.parquet"
 
-        # Full path of the output CSV file
-        output_filepath = os.path.join(output_directory, output_filename)
+        # Full path of the output files
+        output_filepath_csv = os.path.join(output_directory, output_filename_csv)
+        output_filepath_parquet = os.path.join(output_directory, output_filename_parquet)
 
         # Write the data to the output CSV file
-        with open(output_filepath, mode='w', newline='') as file:
+        with open(output_filepath_csv, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(header)  # Write header
             writer.writerows(rows)  # Write the generated rows
 
-        print(f"CSV file created: {output_filepath}")
+        # Write the data to the output Parquet file using pandas
+        df = pd.DataFrame(rows, columns=header)
+        df.to_parquet(output_filepath_parquet, engine='pyarrow')
+
+        print(f"CSV file created: {output_filepath_csv}")
+        print(f"Parquet file created: {output_filepath_parquet}")
