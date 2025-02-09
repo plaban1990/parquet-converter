@@ -1,40 +1,37 @@
-name: CSV ↔ Parquet Conversion
+name: Upload File to Repository
 
 on:
-  workflow_dispatch:  # Manual trigger for now
+  workflow_dispatch:
+    inputs:
+      file_name:
+        description: "File to upload (e.g., input.csv)"
+        required: true
+        type: string
+      folder_name:
+        description: "Folder to upload to (e.g., data/)"
+        required: false
+        default: "data"
+        type: string
 
 jobs:
-  convert:
+  upload-file:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
+      - name: Create Folder (if not exists)
+        run: mkdir -p ${{ github.event.inputs.folder_name }}
 
-      - name: Install Dependencies
-        run: pip install pandas pyarrow fastparquet
+      - name: Upload File (Example: input.csv)
+        run: |
+          echo "This is a test file for GitHub Actions" > ${{ github.event.inputs.folder_name }}/${{ github.event.inputs.file_name }}
 
-      - name: Upload Sample Input File
-        uses: actions/upload-artifact@v4
-        with:
-          name: input-files
-          path: input.csv  # Make sure this file exists in your repo
-
-      - name: Run Conversion (CSV to Parquet)
-        run: python convert.py csv input.csv output.parquet
-
-      - name: Run Conversion (Parquet to CSV)
-        run: python convert.py parquet output.parquet output.csv
-
-      - name: Upload Converted Files
-        uses: actions/upload-artifact@v4
-        with:
-          name: converted-files
-          path: |
-            output.parquet
-            output.csv
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add ${{ github.event.inputs.folder_name }}/${{ github.event.inputs.file_name }}
+          git commit -m "Added ${{ github.event.inputs.file_name }} to ${{ github.event.inputs.folder_name }}"
+          git push origin main
