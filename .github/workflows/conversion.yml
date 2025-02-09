@@ -1,37 +1,42 @@
-name: Upload File to Repository
+name: Generate CSV and Parquet Files
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      file_name:
-        description: "File to upload (e.g., input.csv)"
-        required: true
-        type: string
-      folder_name:
-        description: "Folder to upload to (e.g., data/)"
-        required: false
-        default: "data"
-        type: string
 
 jobs:
-  upload-file:
+  generate_files:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Create Folder (if not exists)
-        run: mkdir -p ${{ github.event.inputs.folder_name }}
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'  # You can use any version that works for your script
 
-      - name: Upload File
+      # Step 3: Install dependencies
+      - name: Install dependencies
         run: |
-          echo "This is a test file for GitHub Actions" > ${{ github.event.inputs.folder_name }}/${{ github.event.inputs.file_name }}
-
-      - name: Commit & Push Changes
+          python -m pip install --upgrade pip
+          pip install pandas pyarrow  # Install pandas and pyarrow for Parquet support
+          
+      # Step 4: Run the Python script to generate the CSV and Parquet files
+      - name: Run Python script
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add ${{ github.event.inputs.folder_name }}/${{ github.event.inputs.file_name }}
-          git commit -m "Added ${{ github.event.inputs.file_name }} to ${{ github.event.inputs.folder_name }}"
-          git push origin main
+          python generate_files.py  # Make sure this script is located in the root of your repository
+
+      # Step 5: Upload generated files (optional - if you want to store the generated files as artifacts)
+      - name: Upload CSV and Parquet files as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: generated-files
+          path: |
+            target/*.csv
+            target/*.parquet
