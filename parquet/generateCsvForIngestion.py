@@ -24,8 +24,8 @@ def generate_value(data_type, input_element_name):
         return "N/A"  # In case of unknown type
 
 # Define the input and output directories
-input_directory = 'C:/Users/1033509/WorkSpace/plat-jdp-common-automated-test/csv-data-generator-python/CSVDataGen/EntityFiles/'
-output_directory = 'C:/Users/1033509/WorkSpace/plat-jdp-common-automated-test/csv-data-generator-python/CSVDataGen/GenerateFilesCSV/GenerateFiles/'
+input_directory = '../entityFiles/'
+output_directory = '../target/'
 
 # Function to read the input element and type from the CSV file
 def read_input_elements_from_csv(csv_filename):
