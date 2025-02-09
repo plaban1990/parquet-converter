@@ -24,7 +24,7 @@ jobs:
       - name: Create Folder (if not exists)
         run: mkdir -p ${{ github.event.inputs.folder_name }}
 
-      - name: Upload File (Example: input.csv)
+      - name: Upload File
         run: |
           echo "This is a test file for GitHub Actions" > ${{ github.event.inputs.folder_name }}/${{ github.event.inputs.file_name }}
 
