@@ -35,7 +35,7 @@ jobs:
       # Step 5: Run the Python script to generate the CSV and Parquet files
       - name: Run Python script
         run: |
-          python /parquet/generateCsvForIngestion.py  # Make sure this script is located in the root of your repository
+          python ./parquet/generateCsvForIngestion.py  # Make sure this script is located in the root of your repository
 
       # Step 6: Upload generated files (optional - if you want to store the generated files as artifacts)
       - name: Upload CSV and Parquet files as artifacts
