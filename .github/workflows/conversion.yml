@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -20,7 +20,7 @@ jobs:
         run: pip install pandas pyarrow fastparquet
 
       - name: Upload Sample Input File
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: input-files
           path: input.csv  # Make sure this file exists in your repo
@@ -32,7 +32,7 @@ jobs:
         run: python convert.py parquet output.parquet output.csv
 
       - name: Upload Converted Files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: converted-files
           path: |
