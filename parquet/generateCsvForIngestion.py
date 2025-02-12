@@ -1,9 +1,10 @@
 import csv
 import random
 import string
-from datetime import datetime
+import shutil
 import os
 import pandas as pd
+from datetime import datetime
 
 # Function to generate random values based on the type
 def generate_value(data_type, input_element_name):
@@ -18,7 +19,7 @@ def generate_value(data_type, input_element_name):
     elif data_type == 'Double':
         return round(random.uniform(1, 1000), 2)  # Random float (double) rounded to 2 decimal places
     elif data_type == 'Timestamp':
-        return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")  # Current UTC timestamp in YYYYMMDDTHHMMSSZ format
+        return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")  # Current UTC timestamp in YYYY-MM-DDTHHMMSSZ format
     elif data_type == 'Boolean':
         return random.choice([True, False])  # Random Boolean value
     else:
@@ -27,6 +28,12 @@ def generate_value(data_type, input_element_name):
 # Define the input and output directories
 input_directory = './entityFiles/'
 output_directory = './target/'
+
+# Function to clean the target directory before each run
+def clean_target_directory():
+    if os.path.exists(output_directory):
+        shutil.rmtree(output_directory)  # Remove all files and folders inside
+    os.makedirs(output_directory, exist_ok=True)  # Recreate an empty target directory
 
 # Function to read the input element and type from the CSV file
 def read_input_elements_from_csv(csv_filename):
@@ -40,8 +47,8 @@ def read_input_elements_from_csv(csv_filename):
             input_elements.append((input_element_name, data_type))
     return input_elements, base_filename
 
-# Create the output directory if it doesn't exist
-os.makedirs(output_directory, exist_ok=True)
+# Clean target directory before writing new files
+clean_target_directory()
 
 # Loop through all files in the input directory
 for filename in os.listdir(input_directory):
@@ -66,11 +73,11 @@ for filename in os.listdir(input_directory):
         # Generate a unique number for the filename (e.g., random or sequential)
         unique_number = random.randint(1000, 9999)
 
-        # Create the CSV filename in the format 'inventoryTransactions_timestamp_number.csv'
+        # Create the filenames
         output_filename_csv = f"{base_filename}_{timestamp}_{unique_number}.csv"
         output_filename_parquet = f"{base_filename}_{timestamp}_{unique_number}.parquet"
 
-        # Full path of the output files
+        # Full paths of the output files
         output_filepath_csv = os.path.join(output_directory, output_filename_csv)
         output_filepath_parquet = os.path.join(output_directory, output_filename_parquet)
 
@@ -84,5 +91,5 @@ for filename in os.listdir(input_directory):
         df = pd.DataFrame(rows, columns=header)
         df.to_parquet(output_filepath_parquet, engine='pyarrow')
 
-        print(f"CSV file created: {output_filepath_csv}")
-        print(f"Parquet file created: {output_filepath_parquet}")
+        print(f"✅ CSV file created: {output_filepath_csv}")
+        print(f"✅ Parquet file created: {output_filepath_parquet}")
