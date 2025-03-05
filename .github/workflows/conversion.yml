@@ -43,5 +43,5 @@ jobs:
         with:
           name: generated-files
           path: |
-            target/*.csv
-            target/*.parquet
+            ./target/*.csv
+            ./target/*.parquet
