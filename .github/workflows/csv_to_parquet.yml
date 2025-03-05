@@ -1,0 +1,32 @@
+name: Convert CSV to Parquet
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install pandas pyarrow
+
+      - name: Convert all CSV files to Parquet
+        run: python scripts/convert_csv_to_parquet.py
+
+      - name: Upload Parquet files
+        uses: actions/upload-artifact@v4
+        with:
+          name: parquet-files
+          path: target/*.parquet
